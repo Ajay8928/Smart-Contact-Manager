@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::Layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>This is sign up Page</title>
+</head>
+<body>
+	<section> 
+	 <div class="container">
+	  <div class="row">
+	    <div class="col-md-6 offset-md-3">
+	      <div class="my-card">
+	      <div th:if="${session.message}" th:classappend="${session.message.type}"class="alert alert-primary" role="alert">
+              <p th:text="${session.message.content}"></p>
+              <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+          </div>
+	      <div class="conatainer text-center">
+	      <img style="width:70px;" th:src="@{/image/contract.png}" alt="" />
+	      </div>
+	        <h1 class="text-center">Register Here</h1>
+	        <form novalidate th:action="@{/do_register}" method="post" th:object="${user}">
+	          <!--name field-->
+	           <div class="mb-3">
+                 <label for="exampleInputname" class="form-label">Name</label>
+                  <input type="text" 
+                  name="name"
+                  class="form-control" 
+                  th:classappend="${#fields.hasErrors('name')? 'is-invalid' :''}"
+                  id="name_field" 
+                  aria-describedby="emailHelp" 
+                  placeholder="Enter here"
+                  required
+                  th:value="${user.name}"/>
+                  <div class="invalid-feedback" th:each="e:${#fields.errors('name')}">
+                    <p th:text="${e}"></p>
+                </div>
+                 </div>
+                  
+                 
+                 <!--email field-->
+	           <div class="mb-3">
+                 <label for="exampleInputEmail" class="form-label">Email</label>
+                  <input type="email" 
+                  name="email"
+                  class="form-control" 
+                   th:classappend="${#fields.hasErrors('email')? 'is-invalid' :''}"
+                  id="email_field" 
+                  aria-describedby="emailHelp" 
+                  placeholder="Enter here"
+                  th:value="${user.email}">
+                  <div class="invalid-feedback" th:each="e:${#fields.errors('email')}">
+                    <p th:text="${e}"></p>
+                </div>
+                 </div>
+                 <!--password field-->
+	           <div class="mb-3">
+                 <label for="exampleInputPassword" class="form-label">Password</label>
+                  <input type="password" 
+                  name="password"
+                  class="form-control" 
+                   th:classappend="${#fields.hasErrors('password')? 'is-invalid' :''}"
+                  id="password_field" 
+                  aria-describedby="emailHelp" 
+                  placeholder="Enter here">
+                  <div class="invalid-feedback" th:each="e:${#fields.errors('password')}">
+                    <p th:text="${e}"></p>
+                </div>
+                 </div>
+                 <!-- about -->
+                 <div class=form-group>
+                 <textarea th:value="${user.about}" name="about"placeholder="Enter something about yourself" cols="75" rows="8" class="form control"></textarea>
+                 </div>
+                 
+                 <!-- terms conditions -->
+                 <div class="form-group form-cheeck">
+                 <input type="checkbox"
+                 name="agreement"
+                 class="form-check-input"
+                 id="agreement" />
+                 <label for="agreement">Accept terms and conditions</label>
+                 </div>
+                 
+                 
+                 <div class="container text-center mt-2">
+                 <button type="submit" class="btn btn-primary bg-primary">Submit
+                 </button>
+                 <button type="reset" class="btn btn-primary btn-warning">Reset
+                 </button> 	 	
+                 </div>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	 </div>
+	</section>
+</body>
+</html>
